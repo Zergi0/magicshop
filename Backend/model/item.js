@@ -4,8 +4,11 @@ const {Schema} = mongoose
 
 const ItemSchema = new Schema({
     name: String,
+    type: String,
     rarity: String,
     price: Number,
+    stat_modifier: String,
+    requirement: String,
     description: String,
     picture: String
 });
