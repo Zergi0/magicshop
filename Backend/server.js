@@ -1,7 +1,8 @@
 require("dotenv").config();
 const express = require('express');
 const mongoose = require("mongoose");
-const ItemModel = require("./model/item")
+const ItemModel = require("./model/item");
+const UserModel = require("./model/user");
 const app = express();
 
 const { MONGO_URL, PORT = 8080 } = process.env;
@@ -14,7 +15,7 @@ if (!MONGO_URL) {
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
-})
+});
 
 app.get('/api/items', async (req,res) => {
     const items = await ItemModel.find();
@@ -24,7 +25,7 @@ app.get('/api/items', async (req,res) => {
 app.get('/api/item/:id', async (req,res) =>{
   const item = await ItemModel.findById(req.params.id);
   return res.json(item);
-})
+});
 
 app.post('/api/item', async (req,res) =>{
   try{
@@ -34,7 +35,7 @@ app.post('/api/item', async (req,res) =>{
   } catch(err) {
     return next(err);
   }
-})
+});
 
 app.patch('/api/item', async (req, res) =>{
   try{
@@ -47,7 +48,29 @@ app.patch('/api/item', async (req, res) =>{
   } catch (err){
     return next(err);
   }
-})
+});
+
+app.get('/api/users', async (req, res) => {
+  const users = await UserModel.find();
+  return res.json(users);
+});
+
+app.get('/ap/user/:id', async (req, res) =>{
+  const user = await UserModel.findById(req.params.id);
+  return res.json(users);
+});
+
+app.post('/api/user', async (req, res) => {
+  try{
+    const newUser = req.body;
+    UserModel.create(newUser);
+    return res.json(newUser);
+  } catch(err) {
+    return next(err);
+  }
+});
+
+
 
 
 const main = async () => {
