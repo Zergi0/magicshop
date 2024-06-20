@@ -17,6 +17,7 @@ app.get('/', (req, res) => {
   res.send('Hello World!')
 });
 
+//item api
 app.get('/api/items', async (req,res) => {
     const items = await ItemModel.find();
     return res.json(items);
@@ -50,6 +51,17 @@ app.patch('/api/item', async (req, res) =>{
   }
 });
 
+app.delete('/api/item/:id', async (req, res) => {
+  try{
+    const deletedItem = await ItemModel.findByIdAndDelete(req.params.id);
+    return res.json(deletedItem);
+  } catch (err){
+    return next(err);
+  }
+})
+
+//user api
+
 app.get('/api/users', async (req, res) => {
   const users = await UserModel.find();
   return res.json(users);
@@ -70,6 +82,28 @@ app.post('/api/user', async (req, res) => {
   }
 });
 
+app.patch('/api/user/:id', async (req,res) => {
+  try{
+    const newUser = await UserModel.findOneAndUpdate(
+      {_id:req.params.id},
+      { $set: { ...req.body } },
+      { new: true }
+    );
+    return res.json(newUser);
+  } catch (err){
+    return next(err);
+  }
+});
+
+app.delete('/api/user/:id', async (req,res) =>{
+  try{
+    const deletedUser = await UserModel.findByIdAndDelete(req.params.id);
+    return res.json(deletedUser);
+  } catch(err){
+    return next(err);
+  }
+});
+
 
 
 
@@ -77,7 +111,7 @@ const main = async () => {
   await mongoose.connect(MONGO_URL);
 
   app.listen(PORT, () => {
-    console.log("App is listening on 8080");
+    console.log(`App is listening on ${PORT}`);
   });
 };
 main().catch((err) => {
