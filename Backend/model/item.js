@@ -7,8 +7,14 @@ const ItemSchema = new Schema({
     type: String,
     rarity: String,
     price: Number,
-    stat_modifier: String,
-    requirement: String,
+    stat_modifier: {
+        type: String,
+        default: "None"
+    },
+    requirement: {
+        type: String,
+        default: "None"
+    },
     description: String,
     picture: String
 });
