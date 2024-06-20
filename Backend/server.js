@@ -104,7 +104,18 @@ app.delete('/api/user/:id', async (req,res) =>{
   }
 });
 
-
+app.get('/api/login', async (req,res) => {
+  try{
+    const userMatchingUsername = await UserModel.findOne({userName : req.body.userName});
+    const usersHashedPassword = req.body.password;
+    //TODO: hashing
+    if(userMatchingUsername == null || usersHashedPassword != userMatchingUsername.password){
+      throw new Exception();
+    }
+  } catch(err){
+    return next(err);
+  }
+})
 
 
 const main = async () => {
@@ -114,6 +125,8 @@ const main = async () => {
     console.log(`App is listening on ${PORT}`);
   });
 };
+
+//TODO: error handling
 main().catch((err) => {
   console.error(err);
   process.exit(1);
