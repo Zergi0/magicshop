@@ -1,1 +1,1 @@
-# DND-magicshop
+#magicshop
