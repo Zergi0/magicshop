@@ -4,11 +4,11 @@ Magicshop is a WIP project using the MERN stack. The goal of the project is to c
 The website will serve as a library to hold custom items players and DM-s would use throughout the game.
 
 
-### Built With
-MongoDB
-Express
-React
-Node
+## Built With
+### MongoDB
+### Express
+### React
+### Node
 
 ## Getting Started
 
